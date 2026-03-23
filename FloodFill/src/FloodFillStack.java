@@ -1,4 +1,4 @@
-public class FloodFillStack {
+public class FloodFillStack implements FillAlgorithm {
     private Node<Point> top;
 
     public FloodFillStack() {

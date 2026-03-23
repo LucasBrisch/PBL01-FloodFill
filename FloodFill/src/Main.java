@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
 
         JFrame window = new JFrame("Flood Fill");
-        Screen panel = new Screen();
+        // Livia use the logic below f the menu:
+        var panel = new Screen(new FloodFillQueue());
 
         window.add(panel);
         window.setSize(420, 440);

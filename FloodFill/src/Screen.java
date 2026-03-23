@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Screen extends JPanel {
-    private int[][] pixels = new int[8][8];
-    private FloodFillStack FloodFillStack = new FloodFillStack();
+public class Screen<T extends FillAlgorithm> extends JPanel {
+    private final int[][] pixels = new int[8][8];
+    private final T fillAlgorithm;
 
-    public Screen() {
+    public Screen(T fillAlgorithm) {
+        this.fillAlgorithm = fillAlgorithm;
         for (int i = 0; i < 8; i++) {
             pixels[i][7 - i] = 1;
         }
@@ -18,7 +19,7 @@ public class Screen extends JPanel {
                 int x = e.getX() / pixelSize;
                 int y = e.getY() / pixelSize;
                 if (x >= 0 && x < 8 && y >= 0 && y < 8) {
-                    FloodFillStack.fill(pixels, x, y);
+                    fillAlgorithm.fill(pixels, x, y);
                     repaint();
                 }
             }
