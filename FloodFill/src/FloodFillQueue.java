@@ -25,8 +25,8 @@ public class FloodFillQueue implements FillAlgorithm {
 
             for (int i = 0; i < 4; i++) {
                 // we check if the neighboring pixels are valid
-                int newX = x + directions[i][i];
-                int newY = y + directions[i][i];
+                int newX = x + directions[i][0];
+                int newY = y + directions[i][1];
 
                 if (newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length && grid[newX][newY] == 0) {
                     // if they are valid, queue them and color them
