@@ -38,7 +38,7 @@ public class FloodFillStack implements FillAlgorithm {
                 panel.repaint();
 
                 try {
-                    Thread.sleep(5); // controla a "animação"
+                    Thread.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
