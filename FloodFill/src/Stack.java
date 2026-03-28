@@ -11,12 +11,14 @@ public class Stack <T> {
         Node<T> newNode = new Node<>(data);
         newNode.next = top;
         top = newNode;
+        size++;
     }
 
     public T pop() {
         if (top == null) return null;
         T data = top.data;
         top = top.next;
+        size--;
         return data;
     }
 

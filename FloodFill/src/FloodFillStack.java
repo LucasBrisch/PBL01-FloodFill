@@ -1,46 +1,48 @@
+import java.awt.image.BufferedImage;
+import java.awt.*;
+import javax.swing.*;
+
 public class FloodFillStack implements FillAlgorithm {
-    private Node<Point> top;
+    private Stack<Point> stack = new Stack<>();
 
-    public FloodFillStack() {
-        top = null;
-    }
+    @Override
+    public void fill(BufferedImage image, int startX, int startY, JPanel panel) {
+        int targetColor = image.getRGB(startX, startY);
+        int newColor = Color.BLUE.getRGB();
 
-    public void push(Point p) {
-        Node<Point> newNode = new Node<>(p);
-        newNode.next = top;
-        top = newNode;
-    }
+        if (targetColor == newColor) return;
 
-    public Point pop() {
-        if (top == null) return null;
-        Point p = top.data;
-        top = top.next;
-        return p;
-    }
+        stack.push(new Point(startX, startY));
 
-    public boolean isEmpty() {
-        return top == null;
-    }
+        new Thread(() -> {
+            while (!stack.isEmpty()) {
+                Point p = stack.pop();
+                if (p == null) continue;
 
-    public void fill(int[][] grid, int startX, int startY) {
-        if (grid[startX][startY] != 0) return;
+                int x = p.x;
+                int y = p.y;
 
-        push(new Point(startX, startY));
+                if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight())
+                    continue;
 
-        while (!isEmpty()) {
-            Point p = pop();
-            int x = p.x;
-            int y = p.y;
+                if (image.getRGB(x, y) != targetColor)
+                    continue;
 
-            if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) continue;
-            if (grid[x][y] != 0) continue;
+                image.setRGB(x, y, newColor);
 
-            grid[x][y] = 2;
+                stack.push(new Point(x + 1, y));
+                stack.push(new Point(x - 1, y));
+                stack.push(new Point(x, y + 1));
+                stack.push(new Point(x, y - 1));
 
-            push(new Point(x + 1, y));
-            push(new Point(x - 1, y));
-            push(new Point(x, y + 1));
-            push(new Point(x, y - 1));
-        }
+                panel.repaint();
+
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

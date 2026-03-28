@@ -1,27 +1,30 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Screen<T extends FillAlgorithm> extends JPanel {
-    private final int[][] pixels = new int[8][8];
+    private BufferedImage image;
     private final T fillAlgorithm;
 
     public Screen(T fillAlgorithm) {
         this.fillAlgorithm = fillAlgorithm;
-        for (int i = 0; i < 8; i++) {
-            pixels[i][7 - i] = 1;
+
+        try {
+            image = ImageIO.read(new File("img.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int pixelSize = 50;
-                int x = e.getX() / pixelSize;
-                int y = e.getY() / pixelSize;
-                if (x >= 0 && x < 8 && y >= 0 && y < 8) {
-                    fillAlgorithm.fill(pixels, x, y);
-                    repaint();
-                }
+                int x = e.getX();
+                int y = e.getY();
+
+                fillAlgorithm.fill(image, x, y, Screen.this);
             }
         });
     }
@@ -29,20 +32,6 @@ public class Screen<T extends FillAlgorithm> extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int pixelSize = 50;
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                if (pixels[x][y] == 1) {
-                    g.setColor(Color.BLACK);
-                } else if (pixels[x][y] == 2) {
-                    g.setColor(Color.BLUE);
-                } else {
-                    g.setColor(Color.WHITE);
-                }
-                g.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
-                g.setColor(Color.GRAY);
-                g.drawRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
-            }
-        }
+        g.drawImage(image, 0, 0, null);
     }
 }
