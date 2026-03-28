@@ -5,10 +5,10 @@ public class Main {
 
         JFrame window = new JFrame("Flood Fill");
         // Livia use the logic below f the menu:
-        var panel = new Screen(new FloodFillStack());
+        var panel = new Screen(new FloodFillQueue());
 
         window.add(panel);
-        window.setSize(420, 440);
+        window.setSize(500, 500);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
     }
