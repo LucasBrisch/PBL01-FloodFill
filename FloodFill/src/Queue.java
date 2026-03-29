@@ -21,7 +21,7 @@ public class Queue<T> {
             this.last = newNode;
         } else {
             // the current item will point to the new item behind it
-            this.last.next = newNode;
+            this.last.setNext(newNode);
             // add the new item to the last position
             this.last = newNode;
         }
@@ -31,10 +31,10 @@ public class Queue<T> {
         if (isEmpty()) {return null;}
 
 
-        var dataFromFirst = this.first.data;
+        var dataFromFirst = this.first.getData();
 
         // moves the second item to the first position
-        this.first = this.first.next;
+        this.first = this.first.getNext();
         this.size --;
 
         // if the queue becomes empty the last node should also be empty
@@ -45,7 +45,7 @@ public class Queue<T> {
 
     public T front() {
         if (isEmpty()) {return null;}
-        else {return this.first.data;}
+        else {return this.first.getData();}
     }
 
     public boolean isEmpty() {return this.size == 0;}
@@ -66,8 +66,8 @@ public class Queue<T> {
         Node<T> current = this.first;
 
         for (int index = 0; current != null; index++) {
-            array[index] = current.data;
-            current = current.next;
+            array[index] = current.getData();
+            current = current.getNext();
         }
 
         return array;
@@ -79,11 +79,11 @@ public class Queue<T> {
 
         String result = "[";
 
-        for (Node<T> current = this.first; current != null; current = current.next) {
+        for (Node<T> current = this.first; current != null; current = current.getNext()) {
 
-            result += current.data;
+            result += current.getData();
 
-            if (current.next != null) {
+            if (current.getNext() != null) {
                 result += ", ";
             }
         }

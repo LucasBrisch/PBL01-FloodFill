@@ -3,10 +3,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class FloodFillStack implements FillAlgorithm {
-    private Stack<Point> stack = new Stack<>();
 
     @Override
     public void fill(BufferedImage image, int startX, int startY, JPanel panel) {
+        Stack<Point> stack = new Stack<>();
         int targetColor = image.getRGB(startX, startY);
         int newColor = Color.BLUE.getRGB();
 
@@ -19,8 +19,8 @@ public class FloodFillStack implements FillAlgorithm {
                 Point p = stack.pop();
                 if (p == null) continue;
 
-                int x = p.x;
-                int y = p.y;
+                int x = p.getX();
+                int y = p.getY();
 
                 if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight())
                     continue;

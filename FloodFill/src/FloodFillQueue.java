@@ -3,14 +3,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class FloodFillQueue implements FillAlgorithm {
-    private final Queue<Point> queue;
-
-    public FloodFillQueue() {
-        this.queue = new Queue<>();
-    }
 
     @Override
     public void fill(BufferedImage image, int startX, int startY, JPanel panel) {
+        Queue<Point> queue = new Queue<>();
         int targetColor = image.getRGB(startX, startY);
         int newColor = Color.BLUE.getRGB();
 
@@ -23,8 +19,8 @@ public class FloodFillQueue implements FillAlgorithm {
         new Thread(() -> {
             while (!queue.isEmpty()) {
                 Point p = queue.dequeue();
-                int x = p.x;
-                int y = p.y;
+                int x = p.getX();
+                int y = p.getY();
 
                 if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight())
                     continue;
