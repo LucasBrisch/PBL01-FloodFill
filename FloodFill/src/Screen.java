@@ -5,11 +5,11 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Screen<T extends FillAlgorithm> extends JPanel {
+public class Screen extends JPanel {
     private BufferedImage image;
-    private final T fillAlgorithm;
+    private final FillAlgorithm fillAlgorithm;
 
-    public Screen(T fillAlgorithm) {
+    public Screen(FillAlgorithm fillAlgorithm) {
         this.fillAlgorithm = fillAlgorithm;
 
         try {
