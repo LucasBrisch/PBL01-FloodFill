@@ -13,7 +13,14 @@ public class Screen extends JPanel {
         this.fillAlgorithm = fillAlgorithm;
 
         try {
-            image = ImageIO.read(new File("img.png"));
+            File imgFile = new File("img.png");
+            if (!imgFile.exists()) {
+                imgFile = new File("FloodFill/img.png");
+            }
+            if (!imgFile.exists()) {
+                imgFile = new File("src/img.png");
+            }
+            image = ImageIO.read(imgFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
