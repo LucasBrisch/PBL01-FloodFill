@@ -6,12 +6,12 @@ import java.io.File;
 public class ImageSaver {
     private static final String BASE = "output";
 
-    public static void ensureDirs(String algo) {
-        new File(BASE + "/progress/" + algo).mkdirs();
-        new File(BASE + "/final/" + algo).mkdirs();
+    public static void ensureDirs(String algorithm) {
+        new File(BASE + "/progress/" + algorithm).mkdirs();
+        new File(BASE + "/final/" + algorithm).mkdirs();
     }
 
-    public static synchronized void saveProgress(BufferedImage image, String algo, int count, long threadId) {
+    public static synchronized void saveProgress(BufferedImage image, String algorithm, int count, long threadId) {
         try {
             BufferedImage copy;
             synchronized (image) {
@@ -21,14 +21,14 @@ public class ImageSaver {
                 g.dispose();
             }
 
-            String filename = String.format("%s/progress/%s/%06d_thread-%d.png", BASE, algo, count, threadId);
+            String filename = String.format("%s/progress/%s/%06d_thread-%d.png", BASE, algorithm, count, threadId);
             ImageIO.write(copy, "png", new File(filename));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static synchronized void saveFinal(BufferedImage image, String algo, long threadId) {
+    public static synchronized void saveFinal(BufferedImage image, String algorithm, long threadId) {
         try {
             BufferedImage copy;
             synchronized (image) {
@@ -38,7 +38,7 @@ public class ImageSaver {
                 g.dispose();
             }
 
-            String filename = String.format("%s/final/%s/final_thread-%d.png", BASE, algo, threadId);
+            String filename = String.format("%s/final/%s/final_thread-%d.png", BASE, algorithm, threadId);
             ImageIO.write(copy, "png", new File(filename));
         } catch (Exception e) {
             e.printStackTrace();
