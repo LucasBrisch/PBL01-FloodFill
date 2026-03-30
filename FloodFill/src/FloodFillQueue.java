@@ -16,7 +16,12 @@ public class FloodFillQueue implements FillAlgorithm {
 
         queue.enqueue(new Point(startX, startY));
 
+        ImageSaver.ensureDirs("queue");
+
         new Thread(() -> {
+            int paintedCount = 0;
+            long threadId = Thread.currentThread().getId();
+
             while (!queue.isEmpty()) {
                 Point p = queue.dequeue();
                 int x = p.getX();
@@ -29,6 +34,11 @@ public class FloodFillQueue implements FillAlgorithm {
                     continue;
 
                 image.setRGB(x, y, newColor);
+                paintedCount++;
+
+                if (paintedCount % 10 == 0) {
+                    ImageSaver.saveProgress(image, "queue", paintedCount, threadId);
+                }
 
                 for (int i = 0; i < 4; i++) {
                     int newX = x + directions[i][0];
@@ -45,6 +55,8 @@ public class FloodFillQueue implements FillAlgorithm {
                     e.printStackTrace();
                 }
             }
+
+            ImageSaver.saveFinal(image, "queue", threadId);
         }).start();
     }
 }

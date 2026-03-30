@@ -14,7 +14,12 @@ public class FloodFillStack implements FillAlgorithm {
 
         stack.push(new Point(startX, startY));
 
+        ImageSaver.ensureDirs("stack");
+
         new Thread(() -> {
+            int paintedCount = 0;
+            long threadId = Thread.currentThread().getId();
+
             while (!stack.isEmpty()) {
                 Point p = stack.pop();
                 if (p == null) continue;
@@ -29,6 +34,11 @@ public class FloodFillStack implements FillAlgorithm {
                     continue;
 
                 image.setRGB(x, y, newColor);
+                paintedCount++;
+
+                if (paintedCount % 10 == 0) {
+                    ImageSaver.saveProgress(image, "stack", paintedCount, threadId);
+                }
 
                 stack.push(new Point(x + 1, y));
                 stack.push(new Point(x - 1, y));
@@ -43,6 +53,8 @@ public class FloodFillStack implements FillAlgorithm {
                     e.printStackTrace();
                 }
             }
+
+            ImageSaver.saveFinal(image, "stack", threadId);
         }).start();
     }
 }
