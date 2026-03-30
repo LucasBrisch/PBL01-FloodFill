@@ -36,32 +36,8 @@ public class Queue<T> {
         return dataFromFirst;
     }
 
-    public T front() {
-        if (isEmpty()) {return null;}
-        else {return this.first.getData();}
-    }
-
     public boolean isEmpty() {return this.size == 0;}
 
-    public int size() {return this.size;}
-
-    public void clear() {
-        this.first = null;
-        this.last = null;
-        this.size = 0;
-    }
-
-    public Object[] toArray() {
-        var array = new Object[this.size];
-        Node<T> current = this.first;
-
-        for (int index = 0; current != null; index++) {
-            array[index] = current.getData();
-            current = current.getNext();
-        }
-
-        return array;
-    }
 
     public String toString() {
 

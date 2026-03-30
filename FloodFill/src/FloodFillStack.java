@@ -8,7 +8,7 @@ public class FloodFillStack implements FillAlgorithm {
     public void fill(BufferedImage image, int startX, int startY, JPanel panel) {
         Stack<Point> stack = new Stack<>();
         int targetColor = image.getRGB(startX, startY);
-        int newColor = Color.BLUE.getRGB();
+        int newColor = new Color(0x99CFBD).getRGB();
 
         if (targetColor == newColor) return;
 
