@@ -37,7 +37,7 @@ public class FloodFillStack implements FillAlgorithm {
                 paintedCount++;
 
                 if (paintedCount % 10 == 0) {
-                    ImageSaver.saveProgress(image, "stack", paintedCount, threadId);
+                    ImageSaver.saveImage(image, "stack", false, paintedCount, threadId);
                 }
 
                 stack.push(new Point(x + 1, y));
@@ -54,7 +54,7 @@ public class FloodFillStack implements FillAlgorithm {
                 }
             }
 
-            ImageSaver.saveFinal(image, "stack", threadId);
+            ImageSaver.saveImage(image, "stack", true, null, threadId);
         }).start();
     }
 }

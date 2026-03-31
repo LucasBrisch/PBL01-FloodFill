@@ -11,7 +11,7 @@ public class ImageSaver {
         new File(BASE + "/final/" + algorithm).mkdirs();
     }
 
-    public static synchronized void saveProgress(BufferedImage image, String algorithm, int count, long threadId) {
+    public static synchronized void saveImage(BufferedImage image, String algorithm, boolean isFinal, Integer count, long threadId) {
         try {
             BufferedImage copy;
             synchronized (image) {
@@ -21,28 +21,19 @@ public class ImageSaver {
                 g.dispose();
             }
 
-            String filename = String.format("%s/progress/%s/%06d_thread-%d.png", BASE, algorithm, count, threadId);
-            ImageIO.write(copy, "png", new File(filename));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static synchronized void saveFinal(BufferedImage image, String algorithm, long threadId) {
-        try {
-            BufferedImage copy;
-            synchronized (image) {
-                copy = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-                Graphics g = copy.getGraphics();
-                g.drawImage(image, 0, 0, null);
-                g.dispose();
+            String filename;
+            if (isFinal) {
+                filename = String.format("%s/final/%s/final_thread-%d.png", BASE, algorithm, threadId);
+            } else {
+                if (count == null) {
+                    throw new IllegalArgumentException("count must be provided for progress images");
+                }
+                filename = String.format("%s/progress/%s/%06d_thread-%d.png", BASE, algorithm, count, threadId);
             }
 
-            String filename = String.format("%s/final/%s/final_thread-%d.png", BASE, algorithm, threadId);
             ImageIO.write(copy, "png", new File(filename));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-

@@ -37,7 +37,7 @@ public class FloodFillQueue implements FillAlgorithm {
                 paintedCount++;
 
                 if (paintedCount % 10 == 0) {
-                    ImageSaver.saveProgress(image, "queue", paintedCount, threadId);
+                    ImageSaver.saveImage(image, "queue", false, paintedCount, threadId);
                 }
 
                 for (int i = 0; i < 4; i++) {
@@ -56,7 +56,7 @@ public class FloodFillQueue implements FillAlgorithm {
                 }
             }
 
-            ImageSaver.saveFinal(image, "queue", threadId);
+            ImageSaver.saveImage(image, "queue", true, null, threadId);
         }).start();
     }
 }
